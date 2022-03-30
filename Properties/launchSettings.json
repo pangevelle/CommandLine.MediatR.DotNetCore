@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CommandLine.MediatR.DotNetCore": {
+      "commandName": "Project",
+      "commandLineArgs": "add -f test.txt"
+    }
+  }
+}
