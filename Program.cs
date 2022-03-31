@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using CommandLine.MediatR.DotNetCore.Handlers;
+﻿using CommandLine.MediatR.DotNetCore.Core;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Linq;
 
 namespace CommandLine.MediatR.DotNetCore
 {
@@ -20,6 +20,8 @@ namespace CommandLine.MediatR.DotNetCore
 
             var serviceProvider = new ServiceCollection()
                 .AddSingleton(context => System.Console.Out)
+                .AddTransient(typeof(IPipelineBehavior<,>), typeof(LogRequestHandlerProxy<,>)) // Add a log and then a timer around the handlers
+                .AddTransient(typeof(IPipelineBehavior<,>), typeof(TimeRequestHandlerProxy<,>))
                 .AddMediatR(typeof(Program))  // auto register every IRequest and RequestHandler
                 .BuildServiceProvider();
 
